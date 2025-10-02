@@ -47,11 +47,11 @@
         <a href="https://www.youtube.com/watch?v=XL9rDwcvAyg&amp;t=7s" target="_blank"> <img src="https://cdn.shopify.com/s/files/1/1352/5175/files/dual-easy-wing_guide.jpg?v=1596660842" alt="DUAL EASY WING FILM"> </a>
         <h6 class="text-center">DUAL EASY WING FILM</h6>
     </div>
-    <div class="column">
+    <div class="column" data-device="Galaxy Z Flip 6">
         <a href="https://www.youtube.com/watch?v=8q3wNFVowfg" target="_blank"> <img src="https://cdn.shopify.com/s/files/1/1352/5175/files/Galaxy-Z-Flip6_Dual-Easy-Film.jpg?v=1722272514" alt="DUAL EASY FILM"> </a>
         <h6 class="text-center">Galaxy Z Flip 6<br/>DUAL EASY FILM</h6>
     </div>
-    <div class="column">
+    <div class="column" data-device="Galaxy Z Fold 6">
         <a href="https://www.youtube.com/watch?v=z8fFWBDnNEE" target="_blank"> <img src="https://cdn.shopify.com/s/files/1/1352/5175/files/dual-easy-film.jpg?v=1678302742" alt="DUAL EASY FILM"> </a>
         <h6 class="text-center">Galaxy Z Fold 6<br/>DUAL EASY FILM</h6>
     </div>
@@ -153,6 +153,7 @@
     const searchInput = document.getElementById('searchInput');
     const mainContent = document.getElementById('main-content');
     const searchResults = document.getElementById('searchResults');
+    const searchForm = document.querySelector('.search-form');
 
     window.addEventListener('scroll', () => {
         if (document.activeElement === searchInput) {
@@ -167,6 +168,17 @@
 
     searchInput.addEventListener('blur', () => {
       mainContent.classList.remove('blur');
+    });
+
+    // Expand search bar on focus
+        searchInput.addEventListener('focus', () => {
+        searchForm.style.width = '60vw';
+        searchResults.style.width = '60vw';
+    });
+
+    searchInput.addEventListener('blur', () => {
+        searchForm.style.width = '40vw';
+        searchResults.style.width = '40vw';
     });
 
 //-------------------------------Typing Animation
@@ -302,9 +314,11 @@ const animator = new TextAnimator({
   loopTexts: [
     "Find Your Device",
     "iPhone 17 Pro Max",
+    "17 Pro Max",
     "S25 Ultra",
+    "Galaxy S25 Ultra",
     "Z Flip 7",
-    "Pixel 10 XL Pro",
+    "Pixel 10 Pro XL",
     "OnePlus 13",
   ],
   constantText: "Looking for Your Device?",
@@ -361,22 +375,24 @@ const productColumns = document.querySelectorAll('.grid-container .column');
     // Render matching results
     matched.forEach(item => {
       const resultDiv = document.createElement('div');
-      resultDiv.className = 'flex-column-center search-results-contents';
+      resultDiv.className = 'search-results-contents';
 
       resultDiv.innerHTML = `
             <div class="img-container">
-            <a href="${item.link}" target="_blank">
-                <img src="${item.img}" alt="Search Result Image">
-            </a>
+                <a href="${item.link}" target="_blank">
+                    <img src="${item.img}" alt="Search Result Image">
+                </a>
             </div>
-            <div>
-            <h4>${item.title}</h4>
+            <div class="text-center search-title">
+                <h4>${item.title}</h4>
             </div>
       `;
 
       searchResults.appendChild(resultDiv);
     });
   });
+
+  searchResults.style.setProperty("--items", matched.length);
 </script>
 
 </body>
